@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
-import IpFooter from './components/globals/Footer.vue'
-import IpHeader from './components/globals/Header.vue'
+import IpFooter from './core/components/globals/Footer.vue'
+import IpHeader from './core/components/globals/Header.vue'
 
 import NabisVector from './assets/vector.svg'
 </script>
@@ -31,21 +31,42 @@ import NabisVector from './assets/vector.svg'
         <div class="ip-container__detail">
           <div class="ip-container__detail-skills">
             <ul>
-              <li><span>Frontend</span></li>
-              <li><span>Backend</span></li>
-              <li><span>Devops</span></li>
+              <li
+                class="animate__animated animate__lightSpeedInLeft"
+                :style="{ 'animation-delay': '0.3s' }"
+              >
+                <span>Frontend</span>
+              </li>
+              <li
+                class="animate__animated animate__lightSpeedInLeft"
+                :style="{ 'animation-delay': '0.8s' }"
+              >
+                <span>Backend</span>
+              </li>
+              <li
+                class="animate__animated animate__lightSpeedInLeft"
+                :style="{ 'animation-delay': '1s' }"
+              >
+                <span>Devops</span>
+              </li>
             </ul>
           </div>
 
           <p class="ip-container__about">
             Hola, mi nombre es <strong>Jonatan Iparraguirre</strong>. Soy desarrollador de software
-            con mas de 10 años de experiencia; Durante esos años de trabajo he participado en
+            con más de 10 años de experiencia; Durante esos años de trabajo he participado en
             grandes empresas desarrollando plataformas multi-dispositivo, satisfaciendo las
             necesidades de multiples usuarios.
           </p>
           <!-- <IpExperiences /> -->
-
-          <a class="ip-container__contact" href="https://api.whatsapp.com/send/?phone=%2B51934335134&text&type=phone_number&app_absent=0"> Contáctame </a>
+          <div class="animate__animated animate__jackInTheBox">
+            <a
+              class="ip-container__contact"
+              href="https://api.whatsapp.com/send/?phone=%2B51934335134&text&type=phone_number&app_absent=0"
+            >
+              Contáctame
+            </a>
+          </div>
         </div>
       </div>
 
@@ -187,6 +208,7 @@ import NabisVector from './assets/vector.svg'
 @media (max-width: 760px) {
   .ip-container__developer {
     width: 100vw;
+    padding: 7rem 1rem;
   }
   .ip-container__main {
     display: none;

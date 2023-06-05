@@ -1,10 +1,12 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import ExperiencesModule from '../modules/Experiences/routes'
+import ExperiencesModule from '../../modules/Experiences/routes'
+import ServicesModule from '../../modules/Services/routes'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
-    ...ExperiencesModule
+    ...ExperiencesModule,
+    ...ServicesModule
     // {
     //   path: '/about',
     //   name: 'about',

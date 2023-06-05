@@ -1,113 +1,45 @@
 <script setup lang="ts">
-const experiences = [
-  {
-    company: 'DEVOS INC ',
-    date: 'marzo 2021 - actualidad',
-    description:
-      'Actualmente me desempeño como desarrollador asignado en farmacias peruanas, realizando mantenimiento y desarrollo de aplicaciones construidas con angular y vtex.io, mis principales funciones son el desarrollo UX/UI para las pantallas creadas por el área de diseño',
-    stack: [
-      'angular',
-      'react',
-      'typescript',
-      'sass',
-      'html',
-      'node.js',
-      'vtex.io',
-      'figma',
-      'miro',
-      'devops'
-    ]
-  },
-  {
-    company: 'CANVIA',
-    date: 'enero 2020 - marzo 2021',
-    description:
-      'Desarrollador en el área “Digital Service”, mis funciones fueron la implementación de arquitecturas frontend para las aplicaciones en angular y react, despliegue continuo en AWS e integración con servicios web creados con .net core y nodejs',
-    stack: [
-      'angular',
-      'react',
-      'typescript',
-      'sass',
-      'html',
-      'node.js',
-      'vtex.io',
-      'GCP',
-      'figma',
-      'miro',
-      'devops'
-    ]
-  },
-  {
-    company: 'CSTI CORP',
-    date: '',
-    description:
-      'Desarrollador frontend en el área de transformación digital, creación e implementación de la arquitectura para las aplicaciones en angular, aplicación de filtros de seguridad, implementación de motores reactivos para la aplicación, consumiendo microservicios desarrollados en .net core',
-    stack: [
-      'angular',
-      'typescript',
-      'sass',
-      'html',
-      '.net core,',
-      'figma',
-      'miro',
-      'devops',
-      'docker'
-    ]
-  },
-  {
-    company: 'ORBITA',
-    date: '',
-    description:
-      'Creación de arquitectura frontend y desarrollo SPA del aplicativo Mi-Sentinel. Consumiendo servicios REST y elaborando el proceso de carrito de compras, semáforo de riesgo financiero y otros procesos de negocio',
-    stack: [
-      'angular',
-      'ionic',
-      'react',
-      'sass',
-      'html',
-      '.net core,',
-      'node.js',
-      'mysql',
-      'zeplin',
-      'jira',
-      'swagger',
-      'IIS'
-    ]
-  },
-  {
-    company: 'NABIS',
-    date: '',
-    description:
-      'Desarrollador fullstack desarrollando arquitecturas para las aplicaciones requeridas por la empresa, durante mi participación he realizado documentación, planeamiento y analisis de necesidades. También he desarrollado prototipos de desarrollo mobile',
-    stack: [
-      'angular',
-      'react',
-      'vuejs',
-      'typescript',
-      'html',
-      'sass',
-      'php',
-      'node.js',
-      'mysql',
-      'pgsql',
-      'GCP',
-      'AWS',
-      'serverless',
-      'docker'
-    ]
-  }
-]
+import { useExperiencesCxt } from '@/core/stores/contentfull'
+import { cxtGetEntry } from '@/core/utils/contentfull'
+import { computed, inject } from 'vue'
+
+const $cxt: any = inject('$cxt')
+
+const $experiences: any = useExperiencesCxt()
+
+cxtGetEntry($cxt, '7BHp5vrSk4aj0Bcoaz3i2n')
+  .then(async (entry: any) => {
+    const {
+      fields: { experiences: data }
+    } = entry
+    const experiences = await data.map(async (item: any) => {
+      const stack = await Promise.all(
+        item.fields.stack?.map(async (stack: any) => await cxtGetEntry($cxt, stack.sys.id))
+      ).then((c) => c.map((i) => i.fields.technology))
+
+      return {
+        company: item.fields.company,
+        description: item.fields.description,
+        label: item.fields.label,
+        stack: stack
+      }
+    })
+
+    Promise.all(experiences).then((c) => $experiences.fill(c))
+  })
+  .catch((err: any) => console.log(err))
 </script>
 
 <template>
   <div class="ip-experiences">
     <div class="ip-experiences__container">
-      <div class="ip-experiences__experience" v-for="experience in experiences">
+      <slot v-for="(experience, index) in $experiences.experiences">
+        <div class="ip-experiences__experience animate__animated animate__fadeInUp animate__slow" :style="{'animation-duration' : '0.'+(index*2)+'s'}">
         <img class="ip-experiences__experience-logo" src="" alt="" />
         <h2 class="ip-experiences__experience-company">
           {{ experience.company }}
-          <template v-if="experience.date">
-            | <span>{{ experience.date }}</span>
+          <template v-if="experience.label">
+            | <span>{{ experience.label }}</span>
           </template>
         </h2>
         <p class="ip-experiences__experience-description">
@@ -123,6 +55,7 @@ const experiences = [
           </div>
         </div>
       </div>
+      </slot>
     </div>
   </div>
 </template>

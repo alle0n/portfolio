@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import wspIcon from '../../assets/icons/wsp.svg'
-import linkedinIcon from '../../assets/icons/in.svg'
-import githubIcon from '../../assets/icons/github.svg'
+import wspIcon from '../../../assets/icons/wsp.svg'
+import linkedinIcon from '../../../assets/icons/in.svg'
+import githubIcon from '../../../assets/icons/github.svg'
 
 const navBarLinks = [
   {
@@ -9,11 +9,11 @@ const navBarLinks = [
     text: 'Experiencia'
   },
   {
-    href: '/services',
+    href: 'https://www.linkedin.com/in/jonatan-iparraguirre/',
     text: 'Servicios'
   },
   {
-    href: '/portfolio',
+    href: 'https://www.linkedin.com/in/jonatan-iparraguirre/',
     text: 'Portafolio'
   }
 ]
@@ -24,14 +24,15 @@ const navBarIcons = [
     icon: linkedinIcon
   },
   {
-    href: 'https://api.whatsapp.com/send/?phone=%2B51934335134&text&type=phone_number&app_absent=0',
-    icon: wspIcon,
-    style: { width: '28px' }
-  },
-  {
     href: '#',
     icon: githubIcon
-  }
+  },
+  {
+    href: 'https://api.whatsapp.com/send/?phone=%2B51934335134&text&type=phone_number&app_absent=0',
+    icon: wspIcon,
+    style: { width: '28px' },
+    class: 'animate__animated animate__heartBeat animate__infinite'
+  },
 ]
 </script>
 
@@ -54,7 +55,7 @@ const navBarIcons = [
         <template v-for="icon in navBarIcons">
           <li>
             <a :href="icon.href">
-              <img :src="icon.icon" :alt="icon.icon" :style="icon.style" />
+              <img :class="icon.class" :src="icon.icon" :alt="icon.icon" :style="icon.style" />
             </a>
           </li>
         </template>
@@ -108,6 +109,8 @@ const navBarIcons = [
 @media (min-width: 330px) and (max-width: 760px) {
   .ip-header {
     nav {
+      width: 100%;
+      padding-right: 0;
       &:first-child {
         display: none;
       }

@@ -1,9 +1,9 @@
-import Experiences from '@/modules/Experiences/views/Experiences.vue'
+import Services from '@/modules/Services/views/Services.vue'
 
 export default [
   {
-    path: '/',
-    name: 'home',
-    component: Experiences
+    path: '/services',
+    name: 'services',
+    component: Services
   }
 ]
